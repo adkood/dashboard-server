@@ -21,7 +21,7 @@ exports.addToInventory = (req, res) => {
 
 exports.getQuantityPerMonth = (req, res) => {
     const { meatId, outletId, year, month} = req.query;
-
+    console.log(meatId,outletId,year,month);
     console.log(meatId,outletId,year,month);
 
     const sql = `select * from soldValue where meatId = ? and outletId = ? and year(soldOn) = ? and month(soldOn) = ?`;
@@ -34,3 +34,6 @@ exports.getQuantityPerMonth = (req, res) => {
         res.status(201).json({ messgae: `Data fetched!`, data: results });
     })
 }
+
+// exports.fun = (req,res) => {
+// }
