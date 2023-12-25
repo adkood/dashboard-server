@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 //routes
-const inventoryRoutes = require("./routes/inventoryRoutes");
+const homeRoutes = require("./routes/homeRoutes");
 
 //errorHandler
 const errorHandler = require("./utils/errorHandler");
@@ -16,7 +16,7 @@ const app = express();
 //middlewares
 app.use(cors());
 
-app.use('/api', inventoryRoutes);
+app.use('/api', homeRoutes);
 
 // global error handling 
 app.use(errorHandler);
