@@ -23,43 +23,44 @@ exports.getDataPerMonth = (req, res) => {
         if (err) {
             return res.status(500).json({ error: "Internal server error" });
         }
-        console.log(results);
         res.status(201).json({ messgae: `Data fetched!`, data: results });
     })
 }
 
 exports.getRefillDataPerMonth = (req, res) => {
-    const { meatId, outletId, year, month } = req.query;
-    let inventoryId = outletId;
+    const { meatId, inventoryId, year, month } = req.query;
+
+    console.log(meatId,inventoryId,year,month);
 
     let params = [month];
-    let sql = `select * from refillHistory where month(soldOn) = ?`;
+    let sql = `select * from refillHistory where month(refillDate) = ?`;
 
     if (meatId != 'all') {
         sql = sql + ` and meatId = ?`;
         params = [...params, meatId];
     }
     if (inventoryId != 'all') {
-        sql = sql + ` and outletId = ?`;
+        sql = sql + ` and inventoryId = ?`;
         params = [...params, inventoryId];
     }
     if (year != 'all') {
-        sql = sql + ` and year(soldOn) = ?`;
+        sql = sql + ` and year(refillDate) = ?`;
         params = [...params, year];
     }
 
     pool.query(sql, params, (err, results) => {
         if (err) {
+            console.error(err);
             return res.status(500).json({ error: "Internal server error" });
         }
-
+        console.log("refill:",results);
         res.status(201).json({ message: `Refill data Fetched`, data: results });
     })
 }
 
 exports.getPopularity = (req, res) => {
 
-    let sql = `select * from meatType`;
+    let sql = `select meatId,count(meatId) as count from soldValue group by meatId`;
 
     pool.query(sql, (err, results) => {
         if (err) {
