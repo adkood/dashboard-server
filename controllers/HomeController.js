@@ -23,7 +23,7 @@ exports.getDataPerMonth = (req, res) => {
         if (err) {
             return res.status(500).json({ error: "Internal server error" });
         }
-        res.status(201).json({ messgae: `Data fetched!`, data: results });
+        res.status(201).json({ message: `Data fetched!`, data: results });
     })
 }
 
